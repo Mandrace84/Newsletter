@@ -1,0 +1,9 @@
+
+// Sono impazzito per un momento, poi ho scoperto che Json richiede sempre e solo i doppi apici...Ho lasciato xxx per la key 
+// per sicurezza
+
+{
+
+"key" : "xxx"
+
+}

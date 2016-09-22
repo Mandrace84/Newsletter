@@ -1,3 +1,7 @@
+// Ho inserito i moduli che abbiamo usato finora
+
+
+
 var Mailchimp = require('mailchimp-api-v3');
 
 var fs = require ('fs');

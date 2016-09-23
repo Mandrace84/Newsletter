@@ -8,6 +8,7 @@ var parseJson = require('node-json').parse;
 
 var requireJson = require('node-json').require;
 
+// e la API key dove la prendi?
 var API_KEY = '';
 
 var mailchimp = new Mailchimp(API_KEY);

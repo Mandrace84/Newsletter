@@ -1,6 +1,6 @@
 // Ho inserito i moduli che abbiamo usato finora
 
-
+/*
 
 var Mailchimp = require('mailchimp-api-v3');
 
@@ -11,3 +11,5 @@ var config = require ('config');
 var parseJson = require('node-json').parse;
 
 var requireJson = require('node-json').require;
+
+*/

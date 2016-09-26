@@ -1,0 +1,45 @@
+var campdata = {
+"recipients":
+    {"list_id":"2544b5f0a3",
+     "list_name":"Achadirect.com Newsletter",
+     "segment_text":"<p class=\"nomargin\">Subscribers match <strong>all</strong> of the following conditions:</p><ol id=\"conditions\" class=\"small-meta\"><li class=\"mar-lv1 mar-lr0\"><strong>Preferred language</strong> none of <strong>German, French, Spanish, Italian</strong></li><li class=\"mar-lv1 mar-lr0\"><strong>Sales</strong> none of <strong>Goog, Ja, Klaus, Kris, Namoon, Por, Sunny, Our New List</strong></li></ol><span>For a total of <strong>15082</strong> emails sent.</span>",
+     "recipient_count":15082,
+     "segment_opts":{"saved_segment_id":2121,
+     "match":"all",
+     "conditions":
+        [{"condition_type":"Interests",
+          "field":"interests-bba919f10f",
+          "op":"interestnotcontains"},
+         {"condition_type":"Interests",
+          "field":"interests-c876de25ce",
+           "op":"interestnotcontains"}]}},
+"settings":{
+    // variabile "subject_line":"10% Off all Surgical Steel Items during September",
+    // variabile "title":"Achadirect.com Newsletter NEW NO Sales English | September 2016",
+     "from_name":"Acha Co., Ltd.",
+    // variabile "reply_to":"websales_en@achadirect.com",
+     "use_conversation":false,
+     "to_name":"",
+     "folder_id":"",
+     "authenticate":true,
+     "auto_footer":false,
+     "inline_css":false,
+     "auto_tweet":false,
+     "fb_comments":false,
+     "timewarp":false,
+     "template_id":137,
+     "drag_and_drop":true},
+"tracking":{
+	"opens":true,
+    "html_clicks":true,
+    "text_clicks":false,
+    "goal_tracking":false,
+    "ecomm360":false,
+    // variabile "google_analytics":"Achadirect_com_Newsletter_N_N_EN_Sep_2016",
+    "clicktale":""},
+"social_card":{
+	"image_url":"https://gallery.mailchimp.com/22062e500e/images/9e8aa033-7edc-4fdc-916b-9cc79ac81559.png",
+    "description":"",
+    "title":""},
+}
+module.exports = campdata;

@@ -1,3 +1,7 @@
+// qui sotto trovi i dati che variano all interno della configurazione della NL, che a sua volta trovi sotto nel codice con il 
+// nome var campdata.
+
+
 //setup = {
 //"listid" : "",
  //"title" :  "",
@@ -7,6 +11,11 @@
  //"reply" : "",
  //"google" : ""
  //};
+
+//il programmino non e ancora finito, perche manca del codice per alcuni di queste variabili, ma ho voluto per ora solo occuparmi
+// di alcune di esse per testare. In node sembra funzionare, ma come output mi da 
+// solo l ultimo elemento del ciclo for che ho fatto.
+// Credo che quindi qualcosa vada impostato differentemente. Mi puoi aiutare?
 
 var setup = {};
  

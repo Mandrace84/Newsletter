@@ -155,6 +155,6 @@ function parachange () {
 
 parachange();
 
-console.log (newsletters);
+newsletters.forEach( function(news) { console.log(news); });
 
 module.exports = newsletters

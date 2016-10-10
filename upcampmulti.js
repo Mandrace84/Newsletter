@@ -38,13 +38,13 @@ function sorting () {
 
     for(var i=0,len=Campdata.length;i<len;i++) {
 	
-var buffer = JSON.parse (JSON.stringify (datapost));
+              var buffer = JSON.parse (JSON.stringify (datapost));
 
-buffer.body = Campdata[i];
+              buffer.body = Campdata[i];
 
-array.push (buffer);
+              array.push (buffer);
 
-}
+     }
 
 }
 
@@ -54,105 +54,107 @@ mailchimp.batch (array);
 
 .then(function (results) {
 
-for(var i=0,len=results.length;i<len;i++) {
+           for(var i=0,len=results.length;i<len;i++) {
 
-var copy = JSON.parse (JSON.stringify (dataput));
+                    var copy = JSON.parse (JSON.stringify (dataput));
 
-copy.path = '/campaigns/' + results[i].id + '/content'
+                    copy.path = '/campaigns/' + results[i].id + '/content'
 
-copy.body =  { html : function contents () { if (results.settings.title.includes ("NEW NO")) {
+                    copy.body =  { html : function contents () { 
+			                      
+			               if (results.settings.title.includes ("NEW NO")) {
 	
-	fs.readFile('./templates/template.html', (err, data) => {
+	                                   fs.readFile('./templates/template.html', (err, data) => {
   
-    if (err) throw err;
+                                           if (err) throw err;
   
-   var decoder = new StringDecoder('utf8');
+                                           var decoder = new StringDecoder('utf8');
   
-   decoder.write (data); 
+                                           decoder.write (data); 
   
-  var template = Handlebars.compile(decoder.write (data)); 
+                                           var template = Handlebars.compile(decoder.write (data)); 
   
-  var risultato = template (Names)
+                                           var risultato = template (Names)
   
   
-  });
+                                           });
   
-  };
+                                         };
   
-  else if (results.settings.title.includes ("NEW YES")) {
+                                       else if (results.settings.title.includes ("NEW YES")) {
 		
-		fs.readFile('./templates/templateny.html', (err, data) => {
+		                          fs.readFile('./templates/templateny.html', (err, data) => {
   
-    if (err) throw err;
+                                          if (err) throw err;
   
-   var decoder = new StringDecoder('utf8');
+                                          var decoder = new StringDecoder('utf8');
   
-   decoder.write (data); 
+                                          decoder.write (data); 
   
-  var template = Handlebars.compile(decoder.write (data)); 
+                                          var template = Handlebars.compile(decoder.write (data)); 
   
-  var risultato = template (Names)
+                                          var risultato = template (Names)
   
   
-  });
+                                               });
   
-  };
+                                            };
 
-    else {
+                                        else {
 		
-		fs.readFile('./templates/templateoy.html', (err, data) => {
+		                          fs.readFile('./templates/templateoy.html', (err, data) => {
   
-    if (err) throw err;
+                                          if (err) throw err;
   
-   var decoder = new StringDecoder('utf8');
+                                          var decoder = new StringDecoder('utf8');
   
-   decoder.write (data); 
+                                          decoder.write (data); 
   
-  var template = Handlebars.compile(decoder.write (data)); 
+                                          var template = Handlebars.compile(decoder.write (data)); 
   
-  var risultato = template (Names)
+                                          var risultato = template (Names)
   
   
-  });
+                                               });
   
-  };
+                                              };
   
-  return risultato
+                                 return risultato
   
-  };
+                                 };
   
-  };
+                              };
   
-  secondarray.push (copy);
+                          secondarray.push (copy);
   
-  };
+                         };
   
-  mailchimp.batch {secondarray};
+             mailchimp.batch (secondarray);
   
-  .then(function (result) {
+            .then(function (result) {
 		
 		console.log ('contents created')
 	
-    })
-    .catch(function (err) {
+              })
+             .catch(function (err) {
 
-	console.log(err);
+	       console.log(err);
 
 	
-    })
+              })
 
 console.log ('campaign created')	
 
-	})
+})
 	
 
-    .catch(function (err) {
+.catch(function (err) {
 
 	
-	console.log(err); 
+console.log(err); 
 
 	
-    })
+})
 		
 		
 

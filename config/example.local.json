@@ -1,3 +1,11 @@
+/*
+configuration file with one example language "english"
+
+must copy this in in: config/local.json
+obviously this last local file should stay OUT of version control
+
+*/
+
 {
 
     "key" : "",

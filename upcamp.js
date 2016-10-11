@@ -1,10 +1,24 @@
-var Mailchimp = require('mailchimp-api-v3');
+/* define comman line arguments
+*/
 
-var config = require ('config');
+const commandLineArgs = require('command-line-args');
 
-var API_KEY = config.get ('key');
+const optionDefinitions = [
+
+    {name: 'language', alias: 'l', type: String }
+
+]
+
+const options = commandLineArgs(optionDefinitions)
+
+var config = require ('config').get(options.language);
+
+var API_KEY = require ('config').get('key');
 
 var Names = config.get ('names');
+
+
+var Mailchimp = require('mailchimp-api-v3');
 
 var fs = require ('fs');
 
@@ -16,65 +30,64 @@ var StringDecoder = require('string_decoder').StringDecoder;
 
 var mailchimp = new Mailchimp(API_KEY);
 
+
 mailchimp.post ({
 	
-	path : '/campaigns'
-        body: Campdata[14] 
+    path : '/campaigns',
+    body: Campdata[14] 
 })
     
-.then(function (result) {
+    .then(function (result) {
 		
    mailchimp.put ({
 	
-	path: '/campaigns/' + result.id + '/content'
+       path: '/campaigns/' + result.id + '/content',
 
-	body: { html : function contents () {
+       body: { html : function() {
 	
-	         fs.readFile('./templates/template.html', (err, data) => {
+	   fs.readFile('./templates/template.html', (err, data) => {
   
-                               if (err) throw err;
+               if (err) throw err;
+	       
+               var decoder = new StringDecoder('utf8');
+	       
+               decoder.write (data); 
   
-                               var decoder = new StringDecoder('utf8');
+               var template = Handlebars.compile(decoder.write (data)); 
   
-                               decoder.write (data); 
+               var risultato = template (Names)
   
-                               var template = Handlebars.compile(decoder.write (data)); 
+	       
+           });
   
-                               var risultato = template (Names)
+           return risultato
   
-  
-                               });
-  
-                  return risultato
-  
-	          };
+       }
 	
-	          };
+	     }
+       
+   })	
 	
-       })	
-	
-       .then(function (result) {
+	    .then(function (result) {
 		
 		console.log ('contents created')
+		
+            })
+            .catch(function (err) {
+	    
+		console.log(err);
+
+            })
+
+		console.log ('campaign created')	
 	
-        })
-        .catch(function (err) {
-
-	console.log(err);
-
-	
-        })
-
-console.log ('campaign created')	
-
-})
+    })
 	
 
-.catch(function (err) {
-
+    .catch(function (err) {
 	
-console.log(err); 
+	console.log(err); 
 
 	
-})
+    })
 

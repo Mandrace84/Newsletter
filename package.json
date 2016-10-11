@@ -13,6 +13,7 @@
     "url": "https://github.com/Mandrace84/Newsletter.git"
   },
   "dependencies": {
+    "command-line-args": "^3.0.1",
     "config": "^1.21.0",
     "handlebars": "^4.0.5",
     "jsonfile": "^2.4.0",

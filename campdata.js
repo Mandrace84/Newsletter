@@ -76,7 +76,7 @@ var campdata = {
 	}
     },
     "settings":{
-	"subject_line":"",
+	"subject_line":"Miu",
 	"title": "",
 	"from_name": "",
 	"reply_to":"",
@@ -103,6 +103,7 @@ var campdata = {
 	"image_url":"https://gallery.mailchimp.com/22062e500e/images/9e8aa033-7edc-4fdc-916b-9cc79ac81559.png",
 	"description":"",
 	"title":""},
+	"type" : "regular"
 };
 
 
@@ -155,6 +156,6 @@ function parachange () {
 
 parachange();
 
-newsletters.forEach( function(news) { console.log(news); });
+// newsletters.forEach( function(news) { console.log(news); });
 
 module.exports = newsletters

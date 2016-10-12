@@ -15,7 +15,7 @@ var config = require ('config').get(options.language);
 
 var API_KEY = require ('config').get('key');
 
-var Names = config.get ('names');
+var Names = require ('config').get ('english.names');
 
 
 var Mailchimp = require('mailchimp-api-v3');
@@ -30,7 +30,6 @@ var StringDecoder = require('string_decoder').StringDecoder;
 
 var mailchimp = new Mailchimp(API_KEY);
 
-
 mailchimp.post ({
 	
     path : '/campaigns',
@@ -38,39 +37,42 @@ mailchimp.post ({
 })
     
     .then(function (result) {
-		
+     
+	 function cont () {
+	        
+			var risultato = '';
+		   
+	       var read = fs.readFileSync('./templates/template.html');
+  
+             var decoder = new StringDecoder('utf8');
+	       
+            decoder.write (read);   
+	       
+           var template = Handlebars.compile(decoder.write(read)); 
+  
+           risultato = template(Names)
+  
+	      return risultato 	
+		  
+	 }
+	
    mailchimp.put ({
 	
        path: '/campaigns/' + result.id + '/content',
 
-       body: { html : function() {
+       body : {html: cont()}
 	
-	   fs.readFile('./templates/template.html', (err, data) => {
-  
-               if (err) throw err;
-	       
-               var decoder = new StringDecoder('utf8');
-	       
-               decoder.write (data); 
-  
-               var template = Handlebars.compile(decoder.write (data)); 
-  
-               var risultato = template (Names)
-  
-	       
-           });
-  
-           return risultato
-  
-       }
-	
-	     }
+	    
        
    })	
 	
 	    .then(function (result) {
-		
+			
+		console.log (result)
 		console.log ('contents created')
+		
+		
+		
 		
             })
             .catch(function (err) {
@@ -79,7 +81,8 @@ mailchimp.post ({
 
             })
 
-		console.log ('campaign created')	
+		console.log ('campaign created')
+		
 	
     })
 	

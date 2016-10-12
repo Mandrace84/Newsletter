@@ -38,56 +38,46 @@ mailchimp.post ({
     
     .then(function (result) {
      
-	 function cont () {
-	        
-			var risultato = '';
-		   
-	       var read = fs.readFileSync('./templates/template.html');
+	function cont () {
+	    
+	    var risultato = '';
+	    
+	    var read = fs.readFileSync('./templates/template.html');
   
-             var decoder = new StringDecoder('utf8');
+            var decoder = new StringDecoder('utf8');
 	       
             decoder.write (read);   
 	       
-           var template = Handlebars.compile(decoder.write(read)); 
+            var template = Handlebars.compile(decoder.write(read)); 
   
-           risultato = template(Names)
-  
-	      return risultato 	
+            risultato = template(Names)
+
+	    return risultato 	
 		  
-	 }
+	}
 	
-   mailchimp.put ({
+	mailchimp.put (
 	
-       path: '/campaigns/' + result.id + '/content',
+	    '/campaigns/' + result.id + '/content',
 
-       body : {html: cont()}
-	
-	    
-       
-   })	
-	
-	    .then(function (result) {
+	    { "html": cont(),
+	      "plain_text": "bbbbbbbbbbb"
+	    }
+	       
+	).then(function (result) {
 			
-		console.log (result)
-		console.log ('contents created')
-		
-		
-		
-		
-            })
-            .catch(function (err) {
+	    console.log ('contents created')
+			
+        }).catch(function (err) {
 	    
-		console.log(err);
+	    console.log(err);
 
-            })
+        })
 
-		console.log ('campaign created')
+	    console.log ('campaign created')
 		
 	
-    })
-	
-
-    .catch(function (err) {
+    }).catch(function (err) {
 	
 	console.log(err); 
 

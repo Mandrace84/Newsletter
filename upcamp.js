@@ -60,9 +60,7 @@ mailchimp.post ({
 	
 	    '/campaigns/' + result.id + '/content',
 
-	    { "html": cont(),
-	      "plain_text": "bbbbbbbbbbb"
-	    }
+	    { "html": cont() }
 	       
 	).then(function (result) {
 			

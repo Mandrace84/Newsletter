@@ -7,6 +7,11 @@
 //"reply_to" : "",
 //"google" : ""
 //};
+
+var config = require ('config');
+
+var Subject = config.get ('english.names.subject');
+
 var d = new Date();
 var month = new Array();
 month[0] = "January";
@@ -76,7 +81,7 @@ var campdata = {
 	}
     },
     "settings":{
-	"subject_line":"Miu",
+	"subject_line": Subject,
 	"title": "",
 	"from_name": "",
 	"reply_to":"",

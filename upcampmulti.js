@@ -1,9 +1,20 @@
+const commandLineArgs = require('command-line-args');
 
-var config = require ('config');
+const optionDefinitions = [
 
-var API_KEY = config.get ('key');
+    {name: 'language', alias: 'l', type: String }
 
-var Names = config.get ('names');
+]
+
+const options = commandLineArgs(optionDefinitions)
+
+var config = require ('config').get(options.language);
+
+var API_KEY = require ('config').get('key');
+
+var Names = require ('config').get ('english.names');
+
+var Mailchimp = require('mailchimp-api-v3');
 
 var fs = require ('fs');
 
@@ -21,16 +32,16 @@ var secondarray = [];
 
 var datapost = { method : 'post',
 
-path = '/campaigns'
+path : '/campaigns',
 
 body : ''
 };
 
 var dataput = { method : 'put',
 
-path = ''
+path : ''
 
-body : ''
+body: ''
 };
 
 
@@ -50,93 +61,89 @@ function sorting () {
 
 sorting ();
 
-mailchimp.batch (array);
+mailchimp.batch (array)
 
 .then(function (results) {
-
-           for(var i=0,len=results.length;i<len;i++) {
-
-                    var copy = JSON.parse (JSON.stringify (dataput));
-
-                    copy.path = '/campaigns/' + results[i].id + '/content'
-
-                    copy.body =  { html : function contents () { 
-			                      
-			               if (results.settings.title.includes ("NEW NO")) {
 	
-	                                   fs.readFile('./templates/template.html', (err, data) => {
-  
-                                           if (err) throw err;
-  
-                                           var decoder = new StringDecoder('utf8');
-  
-                                           decoder.write (data); 
-  
-                                           var template = Handlebars.compile(decoder.write (data)); 
-  
-                                           var risultato = template (Names)
-  
-  
-                                           });
-  
-                                         };
-  
-                                       else if (results.settings.title.includes ("NEW YES")) {
+    function secondsorting () {
 		
-		                          fs.readFile('./templates/templateny.html', (err, data) => {
+		for(var i=0,len=results.length;i<len;i++) {
+		
+		     function cont () { 
+	
+ 	         var risultato = '';
+	
+            if (results[i].settings.title.includes ("NEW NO")) {
+			 
+			     var read = fs.readFileSync('./templates/template.html');
   
-                                          if (err) throw err;
+                 var decoder = new StringDecoder('utf8');
+	       
+                 decoder.write (read);   
+	       
+                 var template = Handlebars.compile(decoder.write(read)); 
   
-                                          var decoder = new StringDecoder('utf8');
+                 risultato = template(Names)
+			
+		        }
+		 
+	        else if (results[i].settings.title.includes ("NEW YES")) {
+			 
+			    var read = fs.readFileSync('./templates/templateny.html');
   
-                                          decoder.write (data); 
+                var decoder = new StringDecoder('utf8');
+	       
+                decoder.write (read);   
+	       
+                var template = Handlebars.compile(decoder.write(read)); 
   
-                                          var template = Handlebars.compile(decoder.write (data)); 
+                risultato = template(Names)
+			
+		       }
+		 
+	        else {
+			 
+			     var read = fs.readFileSync('./templates/templateoy.html');
   
-                                          var risultato = template (Names)
+                 var decoder = new StringDecoder('utf8');
+	       
+                 decoder.write (read);   
+	       
+                 var template = Handlebars.compile(decoder.write(read)); 
   
-  
-                                               });
-  
-                                            };
+                  risultato = template(Names)
+			
+		         }
+		 
+		    return risultato
+		 
+	        }
+		
 
-                                        else {
+        var copy = JSON.parse (JSON.stringify (dataput));
+
+        copy.path = '/campaigns/' + results[i].id + '/content'
+
+        copy.body =  cont () 
+			                 
+	    secondarray.push (copy);
+  
+	    }       
+  
+	}
+     
+     secondsorting ()	 
+  
+     mailchimp.batch (secondarray)
+	 
+	
+  
+    .then(function (result) {
 		
-		                          fs.readFile('./templates/templateoy.html', (err, data) => {
-  
-                                          if (err) throw err;
-  
-                                          var decoder = new StringDecoder('utf8');
-  
-                                          decoder.write (data); 
-  
-                                          var template = Handlebars.compile(decoder.write (data)); 
-  
-                                          var risultato = template (Names)
-  
-  
-                                               });
-  
-                                              };
-  
-                                 return risultato
-  
-                                 };
-  
-                              };
-  
-                          secondarray.push (copy);
-  
-                         };
-  
-             mailchimp.batch (secondarray);
-  
-            .then(function (result) {
-		
-		console.log ('contents created')
+		    console.log ('contents created')
 	
               })
-             .catch(function (err) {
+    .catch(function (err) {
 
 	       console.log(err);
 

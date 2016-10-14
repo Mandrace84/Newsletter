@@ -15,7 +15,7 @@ var config = require ('config').get(options.language);
 
 var API_KEY = require ('config').get('key');
 
-var Names = require ('config').get ('english.names');
+var Names = require ('config').get (options.language + '.names');
 
 
 var Mailchimp = require('mailchimp-api-v3');
@@ -42,7 +42,7 @@ mailchimp.post ({
 	    
 	    var risultato = '';
 	    
-	    var read = fs.readFileSync('./templates/template.html');
+	    var read = fs.readFileSync('./templates/' + options.language + '.html');
   
             var decoder = new StringDecoder('utf8');
 	       

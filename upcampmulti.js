@@ -37,14 +37,6 @@ path : '/campaigns',
 body : ''
 };
 
-var dataput = { method : 'put',
-
-path : ''
-
-body: ''
-};
-
-
 function sorting () {
 
     for(var i=0,len=Campdata.length;i<len;i++) {
@@ -64,14 +56,12 @@ sorting ();
 mailchimp.batch (array)
 
 .then(function (results) {
-	
-    function secondsorting () {
-		
-		for(var i=0,len=results.length;i<len;i++) {
-		
+				
 		     function cont () { 
+			 
+			 for(var i=0,len=results.length;i<len;i++) {
 	
- 	         var risultato = '';
+			 var risultato = '';
 	
             if (results[i].settings.title.includes ("NEW NO")) {
 			 
@@ -118,27 +108,18 @@ mailchimp.batch (array)
 		    return risultato
 		 
 	        }
+			
+			 }
+			 
+		  results.forEach (function (conts) { mailchimp.put 
+	     
+		 ( '/campaigns/' + conts.id + '/content', { "html": cont() })
+		 
+		 })
 		
-
-        var copy = JSON.parse (JSON.stringify (dataput));
-
-        copy.path = '/campaigns/' + results[i].id + '/content'
-
-        copy.body =  cont () 
-			                 
-	    secondarray.push (copy);
-  
-	    }       
-  
-	}
-     
-     secondsorting ()	 
-  
-     mailchimp.batch (secondarray)
-	 
 	
   
-    .then(function (result) {
+ .then(function (result) {
 		
 		    console.log ('contents created')
 	
@@ -149,6 +130,7 @@ mailchimp.batch (array)
 
 	
               })
+			  
 
 console.log ('campaign created')	
 

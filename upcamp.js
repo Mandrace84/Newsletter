@@ -17,14 +17,13 @@ var API_KEY = require ('config').get('key');
 
 var Names = require ('config').get (options.language + '.names');
 
-
 var Mailchimp = require('mailchimp-api-v3');
 
 var fs = require ('fs');
 
 var Handlebars = require ('handlebars');
 
-var Campdata = require ('./campdata.js');
+var Campdata = require ('./campdata' + options.language + '.js');
 
 var StringDecoder = require('string_decoder').StringDecoder;
 
@@ -33,7 +32,7 @@ var mailchimp = new Mailchimp(API_KEY);
 mailchimp.post ({
 	
     path : '/campaigns',
-    body: Campdata[14] 
+    body: Campdata[Names.campdatareference] 
 })
     
     .then(function (result) {
